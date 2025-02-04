@@ -82,7 +82,8 @@ def run(playwright):
     else:
         print("No rooms available.")
 
-    page.screenshot(path="screenshot.png", full_page=True)
+    if is_production != "true":
+        page.screenshot(path="screenshot.png", full_page=True)
 
     browser.close()
 
