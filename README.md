@@ -1,4 +1,6 @@
-# Tokyo INN Reservation Bot
+# Tokyo INN Bot
+
+A Python bot checks Tokyo INN website and reserve rooms if available.
 
 ## Prerequisites
 
@@ -15,7 +17,7 @@ $ source .python/bin/activate
 # dev mode
 IS_PRODUCTION=false TOKYOINN_EMAIL=your_email TOKYOINN_PASSWORD=your_password PHONE_NUMBER=your_phone python3 main.py
 
-# loop every 5 minutes
+# loop every minute
 ./batch.sh
 
 # run on local
