@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chrome
+  namespace: {{ .Values.system.namespace }}
+  labels:
+    app: chrome
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chrome
+  template:
+    metadata:
+      labels:
+        app: chrome
+    spec:
+      containers:
+      - name: chrome
+        image: "{{ .Values.images.chrome }}"
+        ports:
+        - containerPort: 9222
+        startupProbe:
+          httpGet:
+            path: /json/version
+            port: 9222
+          failureThreshold: 30
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /json/version
+            port: 9222
+          failureThreshold: 3
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /json/version
+            port: 9222
+          failureThreshold: 3
+          periodSeconds: 10

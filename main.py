@@ -8,16 +8,16 @@ chrome_hostname = os.getenv("CHROME_HOSTNAME", "localhost")
 tokyoinn_email = os.getenv("TOKYOINN_EMAIL", "")
 tokyoinn_password = os.getenv("TOKYOINN_PASSWORD", "")
 phone_number = os.getenv("PHONE_NUMBER", "")
-check_in_date = os.getenv("CHECK_IN_DATE", "2025/08/04")
+checkin_date = os.getenv("CHECKIN_DATE", "2025/08/04")
+checkin_time = os.getenv("CHECKIN_TIME", "22:00:00")
 stay_nights = os.getenv("STAY_NIGHTS", "1")
 guests = os.getenv("GUESTS", "2")
-room_type = os.getenv("ROOM_TYPE", "20") # 10: single room, 20: double room, 30: double bed
-smoke_room = os.getenv("SMOKE_ROOM", "") # 0: no smoking, 1: smoking, : no specific
+room_type = os.getenv("ROOM_TYPE", "20")
+smoke_room = os.getenv("SMOKE_ROOM", "")
 rooms = os.getenv("ROOMS", "1")
-area = os.getenv("AREA", "12") # 12: 秋田
-hotel = os.getenv("HOTEL", "00087") # 00087: 東横INN秋田駅東口
+area = os.getenv("AREA", "12")
+hotel = os.getenv("HOTEL", "00087")
 person_per_room = os.getenv("PERSON_PER_ROOM", "2")
-checkin_time = os.getenv("CHECKIN_TIME", "22:00:00")
 
 def run(playwright):
     if is_production == "true":
@@ -42,7 +42,7 @@ def run(playwright):
 
     page.evaluate(f"""
         () => {{
-            $('#datepicker').val('{check_in_date}');
+            $('#datepicker').val('{checkin_date}');
         }}
     """)
     page.select_option('select[name="inn_date"]', value=stay_nights)

@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tokyoinn-bot
+  namespace: {{ .Values.system.namespace }}
+spec:
+  schedule: "{{ .Values.bot.cron_job_schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: tokyoinn-bot
+              image: {{ .Values.images.bot }}
+              env:
+                - name: IS_PRODUCTION
+                  value: "{{ .Values.env.is_production }}"
+                - name: CHROME_HOSTNAME
+                  value: "{{ .Values.env.chrome_hostname }}"
+                - name: TOKYOINN_EMAIL
+                  value: "{{ .Values.env.tokyoinn_email }}"
+                - name: TOKYOINN_PASSWORD
+                  value: "{{ .Values.env.tokyoinn_password }}"
+                - name: PHONE_NUMBER
+                  value: "{{ .Values.env.phone_number }}"
+                - name: CHECKIN_DATE
+                  value: "{{ .Values.env.checkin_date }}"
+                - name: CHECKIN_TIME
+                  value: "{{ .Values.env.checkin_time }}"
+                - name: STAY_NIGHTS
+                  value: "{{ .Values.env.stay_nights }}"
+                - name: GUESTS
+                  value: "{{ .Values.env.guests }}"
+                - name: ROOM_TYPE
+                  value: "{{ .Values.env.room_type }}"
+                - name: ROOMS
+                  value: "{{ .Values.env.rooms }}"
+                - name: AREA
+                  value: "{{ .Values.env.area }}"
+                - name: HOTEL
+                  value: "{{ .Values.env.hotel }}"
+                - name: PERSON_PER_ROOM
+                  value: "{{ .Values.env.person_per_room }}"
+          restartPolicy: Never

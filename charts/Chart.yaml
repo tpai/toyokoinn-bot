@@ -1,0 +1,6 @@
+apiVersion: v2
+name: tokyoinn_bot
+description: A Python bot for Tokyo INN reservation.
+type: application
+version: 1.0.0
+appVersion: 1.0.0
