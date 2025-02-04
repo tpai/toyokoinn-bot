@@ -2,7 +2,7 @@ system:
   namespace: tokyoinn-bot
 
 bot:
-  cron_job_schedule: "*/5 * * * *"
+  cron_job_schedule: "* * * * *"
 
 env:
   is_production: true
@@ -10,16 +10,16 @@ env:
   tokyoinn_email:
   tokyoinn_password:
   phone_number:
-  checkin_date: 2025/08/04
+  checkin_date: 2025/08/02
   checkin_time: 22:00:00
   stay_nights: 1
-  guests: 2
-  room_type: 20 # 10: single room, 20: double room, 30: double bed
+  guests: 1
+  room_type:    # : no specific preference, 10: single room, 20: double room, 30: double bed
   smoke_room:   # : no specific preference, 0: non-smoking, 1: smoking
   rooms: 1
-  area: 12      # 12: 秋田
-  hotel: 00087  # 00087: 東横INN秋田駅東口
-  person_per_room: 2
+  area: 22      # 12: 秋田, 22: 新潟
+  hotel: 00060  # 00087: 東横INN秋田駅東口, 00060: 東横INN新潟駅前
+  person_per_room: 1
 
 images:
   bot: "tonypai/tokyoinn-bot"
