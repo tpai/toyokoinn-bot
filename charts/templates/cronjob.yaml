@@ -33,6 +33,8 @@ spec:
                   value: "{{ .Values.env.guests }}"
                 - name: ROOM_TYPE
                   value: "{{ .Values.env.room_type }}"
+                - name: SMOKE_ROOM
+                  value: "{{ .Values.env.smoke_room }}"
                 - name: ROOMS
                   value: "{{ .Values.env.rooms }}"
                 - name: AREA
