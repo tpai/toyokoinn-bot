@@ -1,0 +1,27 @@
+version: '3'
+services:
+  chrome:
+    image: justinribeiro/chrome-headless
+    cap_add:
+      - SYS_ADMIN
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - IS_PRODUCTION=true
+      - CHROME_HOSTNAME=chrome
+      - TOKYOINN_EMAIL=
+      - TOKYOINN_PASSWORD=
+      - PHONE_NUMBER=
+      - CHECK_IN_DATE=2025/08/04
+      - STAY_NIGHTS=1
+      - GUESTS=2
+      - ROOM_TYPE=20
+      - ROOMS=1
+      - AREA=12
+      - HOTEL=00087
+      - PERSON_PER_ROOM=2
+      - CHECKIN_TIME=22:00:00
+    depends_on:
+      - chrome
