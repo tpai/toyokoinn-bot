@@ -14,12 +14,15 @@ $ source .python/bin/activate
 ## How to use
 
 ```bash
-# dev mode
+# run headless chrome
+docker run -d -p 9222:9222 --cap-add=SYS_ADMIN justinribeiro/chrome-headless
+
+# dev mode(open browser)
 IS_PRODUCTION=false TOKYOINN_EMAIL=your_email TOKYOINN_PASSWORD=your_password PHONE_NUMBER=your_phone python3 main.py
 
-# loop every minute
+# headless mode loop every minute
 ./batch.sh
 
-# run on local
+# run one time on local
 docker-compose up --build
 ```
