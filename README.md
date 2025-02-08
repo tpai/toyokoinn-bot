@@ -1,4 +1,4 @@
-# Tokyo INN Bot
+# Toyoko INN Bot
 
 A Python bot checks Tokyo INN website and reserve rooms if available.
 
