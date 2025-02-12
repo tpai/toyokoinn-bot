@@ -85,6 +85,7 @@ def run(playwright):
     if is_production != "true":
         page.screenshot(path="screenshot.png", full_page=True)
 
+    context.close()
     browser.close()
 
 with sync_playwright() as playwright:
