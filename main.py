@@ -78,9 +78,9 @@ def run(playwright):
         page.click('input[type="submit"]')
 
         page.wait_for_url('**/finish*')
-        print("Booking successful.")
+        print(f"Booking successful | Check-in: {checkin_date} {checkin_time} | Nights: {stay_nights} | Guests: {guests} | Type: {room_type} | Smoke: {smoke_room} | Rooms: {rooms} | Area: {area} | Hotel: {hotel} | Per room: {person_per_room}")
     else:
-        print("No rooms available.")
+        print(f"No rooms available | Check-in: {checkin_date} {checkin_time} | Nights: {stay_nights} | Guests: {guests} | Type: {room_type} | Smoke: {smoke_room} | Rooms: {rooms} | Area: {area} | Hotel: {hotel} | Per room: {person_per_room}")
 
     if is_production != "true":
         page.screenshot(path="screenshot.png", full_page=True)
