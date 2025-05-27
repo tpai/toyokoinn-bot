@@ -16,7 +16,7 @@ $ source .python/bin/activate
 
 ```bash
 # run headless chrome
-docker run -d -p 9222:9222 --cap-add=SYS_ADMIN --restart=always justinribeiro/chrome-headless
+docker run -d -p 9222:9222 --cap-add=SYS_ADMIN --name chrome-headless --restart=always justinribeiro/chrome-headless
 
 # run one time on local
 docker-compose up --build
