@@ -1,6 +1,7 @@
 from playwright.sync_api import sync_playwright
 
 import os
+import time
 import socket
 
 is_production= os.getenv("IS_PRODUCTION", "true")
@@ -8,16 +9,14 @@ chrome_hostname = os.getenv("CHROME_HOSTNAME", "localhost")
 tokyoinn_email = os.getenv("TOKYOINN_EMAIL", "")
 tokyoinn_password = os.getenv("TOKYOINN_PASSWORD", "")
 phone_number = os.getenv("PHONE_NUMBER", "")
-checkin_date = os.getenv("CHECKIN_DATE", "2025/08/04")
+checkin_date = os.getenv("CHECKIN_DATE", "2025-08-07")
+checkout_date = os.getenv("CHECKOUT_DATE", "2025-08-08")
 checkin_time = os.getenv("CHECKIN_TIME", "22:00:00")
-stay_nights = os.getenv("STAY_NIGHTS", "1")
+rooms = os.getenv("ROOMS", "1")
 guests = os.getenv("GUESTS", "2")
 room_type = os.getenv("ROOM_TYPE", "20")
-smoke_room = os.getenv("SMOKE_ROOM", "0")
-rooms = os.getenv("ROOMS", "1")
-area = os.getenv("AREA", "9")
+smoke = os.getenv("SMOKE", "noSmoking") # smoking, noSmoking, all
 hotel = os.getenv("HOTEL", "00319")
-person_per_room = os.getenv("PERSON_PER_ROOM", "2")
 
 def run(playwright):
     if is_production == "true":
@@ -32,45 +31,30 @@ def run(playwright):
     page.goto("https://www.toyoko-inn.com/?lcl_id=ja")
     page.goto("https://www.toyoko-inn.com/login")
 
-    page.fill('input[name="mail"]', tokyoinn_email)
+    page.fill('input[name="email"]', tokyoinn_email)
     page.fill('input[name="password"]', tokyoinn_password)
-    page.click('input[type="submit"]')
+    page.click('div.login_buttons__zMG9U button:first-child')
 
-    page.wait_for_url('**/index*')
+    page.locator('button.HeaderNavPC_mypage-link__3Tnzt').wait_for()
 
-    page.goto("https://www.toyoko-inn.com/search/")
+    page.goto(f"https://www.toyoko-inn.com/search/result/room_plan/?hotel={hotel}&start={checkin_date}&end={checkout_date}&room={rooms}&people={guests}&smoking=noSmoking&roomType={room_type}&tab=roomType&sort=recommend")
 
-    page.evaluate(f"""
-        () => {{
-            $('#datepicker').val('{checkin_date}');
-        }}
-    """)
-    page.select_option('select[name="inn_date"]', value=stay_nights)
-    page.select_option('select[name="sel_ldgngPpl"]', value=guests)
-    page.select_option('select[name="sel_room_clss_Id"]', value=room_type)
-    page.select_option('select[name="rd_smk"]', value=smoke_room)
-    page.select_option('select[name="rsrv_num"]', value=rooms)
-    page.select_option('select[name="sel_area"]', value=area)
-    page.select_option('select[name="sel_htl"]', value=hotel)
+    page.wait_for_url('**/room_plan/*')
 
-    page.click('a[class*="js-form-action"]')
-
-    page.wait_for_url('**/room*')
-
-    availableRooms = page.locator('a[onclick^="submitReserve"]')
+    availableRooms = page.locator('div.SearchResultRoomPlanChildCard_price-section__D0DAr button')
     roomCount = availableRooms.count()
 
     if roomCount > 0:
         firstRoom= availableRooms.first
         firstRoom.click()
+        time.sleep(1)
 
-        page.wait_for_url('**/input*')
+        page.wait_for_url('**/reservations/*')
 
         page.locator('input[name="purpose_of_use"][value="0"]').check()
-        page.select_option('select[name="room[0][prsn_num]"]', value=person_per_room)
         page.fill('input[name="room[0][tlpn]"]', phone_number)
         page.select_option('select[name="room[0][checkin_tm]"]', value=checkin_time)
-        page.click('a[class*="jsBtnCnfrm"]')
+        page.click('p#cnfrm')
 
         page.wait_for_url('**/confirm*')
 
@@ -78,9 +62,9 @@ def run(playwright):
         page.click('input[type="submit"]')
 
         page.wait_for_url('**/finish*')
-        print(f"Booking successful | Check-in: {checkin_date} {checkin_time} | Nights: {stay_nights} | Guests: {guests} | Type: {room_type} | Smoke: {smoke_room} | Rooms: {rooms} | Area: {area} | Hotel: {hotel} | Per room: {person_per_room}")
+        print(f"Booking successful\n> Check-in: {checkin_date}T{checkin_time}|Rooms: {rooms}|Guests: {guests}|Type: {room_type}|Smoke: {smoke}|Hotel: {hotel}")
     else:
-        print(f"No rooms available | Check-in: {checkin_date} {checkin_time} | Nights: {stay_nights} | Guests: {guests} | Type: {room_type} | Smoke: {smoke_room} | Rooms: {rooms} | Area: {area} | Hotel: {hotel} | Per room: {person_per_room}")
+        print(f"No rooms available\n> Check-in: {checkin_date}T{checkin_time}|Rooms: {rooms}|Guests: {guests}|Type: {room_type}|Smoke: {smoke}|Hotel: {hotel}")
 
     if is_production != "true":
         page.screenshot(path="screenshot.png", full_page=True)

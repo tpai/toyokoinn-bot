@@ -26,13 +26,14 @@ docker-compose up --build
 TOKYOINN_EMAIL=your_email \
 TOKYOINN_PASSWORD=your_password \
 PHONE_NUMBER=your_phone \
-CHECKIN_DATE=2025/08/07 \
+CHECKIN_DATE=2025-08-07 \
+CHECKOUT_DATE=2025-08-08 \
+CHECKIN_TIME=22:00:00 \
+ROOMS=1 \
 GUESTS=2 \
 ROOM_TYPE=20 \
-SMOKE_ROOM=0 \
-AREA=9 \
+SMOKE=noSmoking \
 HOTEL=00319 \
-PERSON_PER_ROOM=2 \
 python3 main.py
 ```
 
@@ -47,11 +48,10 @@ python3 main.py
 | `TOKYOINN_PASSWORD` | `your_password` | Your Tokyo Inn account password |
 | `PHONE_NUMBER` | `your_phone` | Your phone number |
 | `CHECKIN_DATE` | `2025/08/07` | Check-in date (YYYY/MM/DD format) |
+| `CHECKOUT_DATE` | `2025/08/08` | Check-out date (YYYY/MM/DD format) |
 | `CHECKIN_TIME` | `22:00:00` | Check-in time |
-| `STAY_NIGHTS` | `1` | How many nights you stay |
+| `ROOMS` | `1` | Number of rooms |
 | `GUESTS` | `2` | Number of guests |
 | `ROOM_TYPE` | `20` | Room type (10: single room, 20: double room, 30: twin room) |
-| `SMOKE_ROOM` | `0` | Smoking preference (0: no smoking, 1: smoking) |
-| `AREA` | `9` | Area code (9: 青森/Aomori) |
+| `SMOKE` | `noSmoking` | Smoking preference (smoking, noSmoking, all) |
 | `HOTEL` | `00319` | Hotel code (00319: 東横INN青森駅前) |
-| `PERSON_PER_ROOM` | `2` | Number of persons per room |
