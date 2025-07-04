@@ -25,10 +25,19 @@ def run(playwright):
     else:
         browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
+    
+    # Set locale cookie
+    context.add_cookies([{
+        "name": "NEXT_LOCALE",
+        "value": "ja",
+        "domain": "www.toyoko-inn.com",
+        "path": "/",
+        'sameSite': 'Lax',
+        'secure': True
+    }])
 
     page = context.new_page()
 
-    page.goto("https://www.toyoko-inn.com/?lcl_id=ja")
     page.goto("https://www.toyoko-inn.com/login")
 
     page.fill('input[name="email"]', tokyoinn_email)
