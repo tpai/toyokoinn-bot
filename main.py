@@ -49,6 +49,10 @@ def run(playwright):
         firstRoom.click()
         time.sleep(1)
 
+        # close popup
+        page.locator('label[for="student-plan-agreement"]').check()
+        page.locator('div.Dialog_buttons__Sk9_O > button:first-child').click()
+
         page.wait_for_url('**/reservations/*')
 
         page.locator('input[name="purpose_of_use"][value="0"]').check()
